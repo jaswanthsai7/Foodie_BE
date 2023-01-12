@@ -1,0 +1,103 @@
+version: '3.9'
+services:
+  authentication-service:
+    image: authentication_image
+    container_name: authentication-service
+    build: UserAuthentication/
+    restart: always
+    networks:
+      - my-network
+    ports:
+      - "8084:8084"
+    depends_on:
+      - api-gateway
+      - mysqlService
+
+  favourite-service:
+    image: favourite_image
+    container_name: favourite-service
+    build: FavouriteService/
+    restart: always
+    networks:
+      - my-network
+    ports:
+      - "8086:8086"
+    depends_on:
+      - mongoService
+      - api-gateway
+
+  mysqlService:
+    image: mysql:latest
+    container_name: mysql-container
+    networks:
+      - my-network
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  api-gateway:
+    image: api-gateway-image
+    container_name: api-gateway-container
+    build: ApiGateway/
+    restart: always
+    networks:
+      - my-network
+    ports:
+      - "9000:9000"
+
+
+  restaurant-service:
+    image: restaurant_image
+    container_name: restaurant-service
+    build: RestaurantService/
+    restart: always
+    networks:
+      - my-network
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mongoService
+      - rabbitmqService
+
+  order-service:
+    image: order_image
+    container_name: order-service
+    build: OrderService/
+    restart: always
+    networks:
+      - my-network
+    ports:
+      - "8087:8087"
+    depends_on:
+      - mongoService
+      - rabbitmqService
+
+  mongoService:
+    image: mongo
+    container_name: mongo-container
+    ports:
+      - "27017:27017"
+    networks:
+      - my-network
+
+  rabbitmqService:
+    image: rabbitmq:management
+    container_name: rabbitmqcontainer
+    ports:
+      - "5672:15672"
+      - "15672:15672"
+    networks:
+      - my-network
+    restart: always
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+
+networks:
+  my-network:
+    name: my-network
+    driver: bridge
