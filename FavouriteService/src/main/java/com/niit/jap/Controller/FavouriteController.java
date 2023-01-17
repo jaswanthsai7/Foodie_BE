@@ -26,7 +26,7 @@ public class FavouriteController {
     @GetMapping("/getUser/{emailId}")
     public ResponseEntity<?> getEmailId(@PathVariable String emailId){
 
-        return new ResponseEntity<>(favouriteService.getByEmail(emailId) , HttpStatus.FOUND);
+        return new ResponseEntity<>(favouriteService.getByEmail(emailId) , HttpStatus.OK);
     }
 
     @PutMapping("/updateUser")
@@ -42,7 +42,7 @@ public class FavouriteController {
 
     @GetMapping("/getAllUser")
     public ResponseEntity<?> gettingAllUser(){
-        return new ResponseEntity<>(favouriteService.getAllUser(),HttpStatus.FOUND);
+        return new ResponseEntity<>(favouriteService.getAllUser(),HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteUser/{emailId}")
@@ -75,22 +75,35 @@ public class FavouriteController {
     @DeleteMapping("/removeFavRestaurant/{restaurantName}/{emailId}")
     public ResponseEntity<?> deleteFavouriteRestaurant (@PathVariable String restaurantName , @PathVariable String emailId) throws UnableToFetchFavouritesException {
         try {
-            favouriteService.removeFavouriteRestaurantFromUser(restaurantName, emailId);
+            return new ResponseEntity<>( favouriteService.removeFavouriteRestaurantFromUser(restaurantName, emailId),HttpStatus.OK);
         } catch (UnableToFetchFavouritesException e) {
             throw new UnableToFetchFavouritesException();
         }
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
 
     }
 
     @DeleteMapping("/removeFavDish/{itemName}/{emailId}")
     public ResponseEntity<?> deleteFavouriteDish( @PathVariable String itemName , @PathVariable String emailId) throws UnableToFetchFavouritesException {
         try {
-            favouriteService.removeFavouriteDishFromUser(itemName, emailId);
+
+            return new ResponseEntity<>(favouriteService.removeFavouriteDishFromUser(itemName, emailId),HttpStatus.OK);
         } catch (UnableToFetchFavouritesException e) {
             throw new UnableToFetchFavouritesException();
         }
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+    }
+
+
+    @GetMapping("/getFavRestaurant/{emailId}")
+    public ResponseEntity<?> getAllUserFavRestaurant(@PathVariable String emailId){
+        return new ResponseEntity<>(favouriteService.getAllFavRestaurant(emailId),HttpStatus.OK);
+    }
+
+
+    @GetMapping("/getFavDish/{emailId}")
+    public ResponseEntity<?> getAllUserFavDish(@PathVariable String emailId){
+        return new ResponseEntity<>(favouriteService.getAllFavDish(emailId),HttpStatus.OK);
     }
 
 

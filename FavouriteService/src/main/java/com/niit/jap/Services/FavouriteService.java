@@ -26,9 +26,15 @@ public interface FavouriteService {
 
     User addFavouriteDishToUser(Dish dish , String emailId) throws DishAlreadyExistException;
 
-    User removeFavouriteDishFromUser(String itemName , String emailId) throws UnableToFetchFavouritesException;
+    boolean removeFavouriteDishFromUser(String itemName , String emailId) throws UnableToFetchFavouritesException;
 
-    User removeFavouriteRestaurantFromUser(String restaurantName , String emailId) throws UnableToFetchFavouritesException;
+    boolean removeFavouriteRestaurantFromUser(String restaurantName , String emailId) throws UnableToFetchFavouritesException;
+
+
+    List<Restaurant> getAllFavRestaurant(String emailId);
+    List<Dish> getAllFavDish(String emailId);
+
+
 
 
 

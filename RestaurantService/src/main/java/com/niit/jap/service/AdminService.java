@@ -4,6 +4,7 @@ import com.niit.jap.domain.Admin;
 import com.niit.jap.domain.Menu;
 import com.niit.jap.domain.Restaurant;
 import com.niit.jap.domain.User;
+import com.niit.jap.exception.ItemAlreadyExistsException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,5 +29,5 @@ public interface AdminService {
 
     Restaurant deleteMenu(List<Menu> menuList,String id);
 
-    Restaurant updateMenu(Menu menu, String id);
+    Restaurant updateMenu(Menu menu, String id) throws ItemAlreadyExistsException;
 }

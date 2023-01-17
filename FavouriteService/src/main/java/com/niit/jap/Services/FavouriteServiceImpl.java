@@ -130,7 +130,7 @@ public class FavouriteServiceImpl implements FavouriteService{
     }
 
     @Override        //remove fav dish from user
-    public User removeFavouriteDishFromUser(String itemName, String emailId) throws UnableToFetchFavouritesException {
+    public boolean removeFavouriteDishFromUser(String itemName, String emailId) throws UnableToFetchFavouritesException {
 
         User user = userRepository.findByEmailId(emailId);
         Optional<Dish> newList = user.getDishList().stream().filter(item -> Objects.equals(item.getItemName(), itemName)).findFirst();
@@ -142,12 +142,13 @@ public class FavouriteServiceImpl implements FavouriteService{
         else
         {
             user.getDishList().removeIf(dish -> dish.getItemName().equals(itemName));
-            return userRepository.save(user);
+             userRepository.save(user);
+            return true;
         }
     }
 
     @Override          //remove fav restaurant from user
-    public User removeFavouriteRestaurantFromUser(String restaurantName, String emailId) throws UnableToFetchFavouritesException {
+    public boolean removeFavouriteRestaurantFromUser(String restaurantName, String emailId) throws UnableToFetchFavouritesException {
 
         User user = userRepository.findByEmailId(emailId);
 
@@ -160,10 +161,26 @@ public class FavouriteServiceImpl implements FavouriteService{
         else
         {
             user.getRestaurantList().removeIf(restaurant -> restaurant.getRestaurantName().equals(restaurantName));
-            return userRepository.save(user);
+             userRepository.save(user);
+             return true;
         }
 
 
+    }
+
+    @Override
+    public List<Restaurant> getAllFavRestaurant(String emailId) {
+
+        User user = userRepository.findByEmailId(emailId);
+        List<Restaurant> restaurantList = user.getRestaurantList();
+        return restaurantList;
+    }
+
+    @Override
+    public List<Dish> getAllFavDish(String emailId) {
+        User user = userRepository.findByEmailId(emailId);
+        List<Dish> dishList = user.getDishList();
+        return dishList;
     }
 
     @Override    //get user by email id
@@ -171,4 +188,6 @@ public class FavouriteServiceImpl implements FavouriteService{
 
         return userRepository.findByEmailId(email);
     }
+
+
 }

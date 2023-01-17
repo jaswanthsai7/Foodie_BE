@@ -8,6 +8,7 @@ import com.niit.jap.domain.Admin;
 import com.niit.jap.domain.Menu;
 import com.niit.jap.domain.Order;
 import com.niit.jap.domain.Restaurant;
+import com.niit.jap.exception.ItemAlreadyExistsException;
 import com.niit.jap.service.AdminService;
 import com.niit.jap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +104,7 @@ public class AdminController {
     }
 
     @PutMapping("/updatemenu/{id}")
-    public ResponseEntity<?> updateRestaurant(@RequestBody Menu menu,@PathVariable String id) {
+    public ResponseEntity<?> updateRestaurant(@RequestBody Menu menu,@PathVariable String id) throws ItemAlreadyExistsException {
         return new ResponseEntity<>(this.adminService.updateMenu(menu,id), HttpStatus.OK);
     }
 

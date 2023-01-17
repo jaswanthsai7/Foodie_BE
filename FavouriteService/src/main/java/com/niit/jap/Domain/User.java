@@ -46,6 +46,7 @@ public class User {
     public void setDishList(List<Dish> dishList) {
         this.dishList = dishList;
     }
+
 }
 
 

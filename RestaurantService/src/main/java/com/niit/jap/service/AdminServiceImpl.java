@@ -1,6 +1,7 @@
 package com.niit.jap.service;
 
 import com.niit.jap.domain.*;
+import com.niit.jap.exception.ItemAlreadyExistsException;
 import com.niit.jap.repository.AdminRepository;
 import com.niit.jap.repository.RestaurantRepository;
 import com.niit.jap.repository.UserRepository;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -71,7 +75,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Restaurant updateRestaurant(Restaurant restaurant, MultipartFile file) throws IOException {
         if (this.restaurantRepository.existsById(restaurant.getId())) {
-           Optional<Restaurant> restaurant1= this.restaurantRepository.findById(restaurant.getId());
+            Optional<Restaurant> restaurant1 = this.restaurantRepository.findById(restaurant.getId());
             Image img = new Image(file.getBytes(), file.getOriginalFilename());
             restaurant.setRestaurantImage(img);
             restaurant.setMenuList(restaurant1.get().getMenuList());
@@ -96,14 +100,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Restaurant deleteMenu(List<Menu> menuList,String id) {
-       Optional<Restaurant> restaurant=this.restaurantRepository.findById(id);
-       restaurant.get().setMenuList(menuList);
-       return this.restaurantRepository.save(restaurant.get());
+    public Restaurant deleteMenu(List<Menu> menuList, String id) {
+        Optional<Restaurant> restaurant = this.restaurantRepository.findById(id);
+        restaurant.get().setMenuList(menuList);
+        return this.restaurantRepository.save(restaurant.get());
     }
 
     @Override
-    public Restaurant updateMenu(Menu menu, String id) {
+    public Restaurant updateMenu(Menu menu, String id) throws ItemAlreadyExistsException {
         List<Restaurant> restaurants = this.restaurantRepository.findAll();
         Optional<Restaurant> restaurant = restaurants.stream().filter(item -> Objects.equals(item.getId(), id)).findFirst();
         List<Menu> menus = restaurant.get().getMenuList();
@@ -115,7 +119,7 @@ public class AdminServiceImpl implements AdminService {
                 menus.add(menu);
                 restaurant.get().setMenuList(menus);
             } else {
-                System.out.println("Menu Item Exists");
+                throw new ItemAlreadyExistsException();
             }
         }
         return this.restaurantRepository.save(restaurant.get());

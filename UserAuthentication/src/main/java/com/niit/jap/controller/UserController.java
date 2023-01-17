@@ -65,7 +65,7 @@ public class UserController {
         return new ResponseEntity<>(this.userService.getUserByEmailId(emailId), HttpStatus.OK);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> getUserByUserNameAndPassword(@RequestBody User user) throws UserNotFoundException {
         try {
             User user1 = this.userService.getUserByEmailIdAndPassword(user.getEmailId(), user.getPassword());
@@ -114,9 +114,10 @@ public class UserController {
             throw new RuntimeException(ex);
         }
     }
+
     @PutMapping("/updateuser")
     public ResponseEntity<?> updateUser(@RequestBody User user) throws UserNotFoundException {
-        return new ResponseEntity<>(this.userService.updateUser(user),HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.updateUser(user), HttpStatus.OK);
     }
 
 }
