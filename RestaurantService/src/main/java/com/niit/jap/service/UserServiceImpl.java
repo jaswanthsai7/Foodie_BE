@@ -14,7 +14,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,7 +52,8 @@ public class UserServiceImpl implements UserService {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setOrderId(order.getOrderId());
         orderDTO.setUserEmailId(order.getUserEmailId());
-        orderDTO.setRestaurant(order.getRestaurant());
+        orderDTO.setDate(order.getDate());
+        orderDTO.setItems(order.getItems());
         orderDTO.setAddress(order.getAddress());
         orderDTO.setTotalAmount(order.getTotalAmount());
         producer.sendMessage(orderDTO);

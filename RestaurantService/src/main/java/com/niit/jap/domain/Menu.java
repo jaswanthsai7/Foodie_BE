@@ -3,15 +3,17 @@ package com.niit.jap.domain;
 public class Menu {
 
     private String itemName;
-    private String itemImage;
+    private String description;
+    private int quantity;
     private double itemPrice;
 
     public Menu() {
     }
 
-    public Menu(String itemName, String itemImage, double itemPrice) {
+    public Menu(String itemName, String description, int quantity, double itemPrice) {
         this.itemName = itemName;
-        this.itemImage = itemImage;
+        this.description = description;
+        this.quantity = quantity;
         this.itemPrice = itemPrice;
     }
 
@@ -23,12 +25,20 @@ public class Menu {
         this.itemName = itemName;
     }
 
-    public String getItemImage() {
-        return itemImage;
+    public String getDescription() {
+        return description;
     }
 
-    public void setItemImage(String itemImage) {
-        this.itemImage = itemImage;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public double getItemPrice() {

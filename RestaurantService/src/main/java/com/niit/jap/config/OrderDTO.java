@@ -1,22 +1,28 @@
 package com.niit.jap.config;
 
 import com.niit.jap.domain.Address;
+import com.niit.jap.domain.Menu;
 import com.niit.jap.domain.Restaurant;
+
+import java.util.Date;
+import java.util.List;
 
 public class OrderDTO {
     private int orderId;
     private String userEmailId;
-    private Restaurant restaurant;
+    private List<Menu> items;
+    private Date date;
     private Address address;
     private double totalAmount;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(int orderId, String userEmailId, Restaurant restaurant, Address address, double totalAmount) {
+    public OrderDTO(int orderId, String userEmailId, List<Menu> items, Date date, Address address, double totalAmount) {
         this.orderId = orderId;
         this.userEmailId = userEmailId;
-        this.restaurant = restaurant;
+        this.items = items;
+        this.date = date;
         this.address = address;
         this.totalAmount = totalAmount;
     }
@@ -37,12 +43,20 @@ public class OrderDTO {
         this.userEmailId = userEmailId;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public List<Menu> getItems() {
+        return items;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setItems(List<Menu> items) {
+        this.items = items;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Address getAddress() {

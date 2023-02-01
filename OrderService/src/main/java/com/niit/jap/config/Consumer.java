@@ -20,7 +20,8 @@ public class Consumer {
         User user =new User();
         order.setUserEmailId(orderDTO.getUserEmailId());
         order.setOrderId(orderDTO.getOrderId());
-        order.setRestaurant(orderDTO.getRestaurant());
+        order.setDate(orderDTO.getDate());
+        order.setItems(orderDTO.getItems());
         order.setAddress(orderDTO.getAddress());
         order.setTotalAmount(orderDTO.getTotalAmount());
         user.setEmailId(order.getUserEmailId());

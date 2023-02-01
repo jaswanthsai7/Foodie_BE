@@ -119,5 +119,9 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestBody User user) throws UserNotFoundException {
         return new ResponseEntity<>(this.userService.updateUser(user), HttpStatus.OK);
     }
+    @GetMapping("/getuser/{emailId}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String emailId) throws UserNotFoundException{
+        return new ResponseEntity<>(this.userService.getUser(emailId),HttpStatus.OK);
+    }
 
 }

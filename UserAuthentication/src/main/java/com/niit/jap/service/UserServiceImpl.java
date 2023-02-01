@@ -98,4 +98,9 @@ public class UserServiceImpl implements UserService {
     public void deleteUserByEmailId(String emailId) throws UserNotFoundException {
         this.userRepository.deleteUserByEmailId(emailId);
     }
+    @Override
+    public Optional<User> getUser(String emailId) throws UserNotFoundException {
+        return userRepository.findUserByEmailId(emailId);
+    }
+
 }

@@ -14,14 +14,17 @@ public interface UserService {
 
     User getUserByEmailIdAndPassword(String emailId, String password) throws UserNotFoundException;
 
-    User saveUser(User user, MultipartFile file) throws UserEmailAlreadyExistsException,IOException;
+    User saveUser(User user, MultipartFile file) throws UserEmailAlreadyExistsException, IOException;
 
-    Optional<User> getUserById(int id) ;
+    Optional<User> getUserById(int id);
 
     boolean getUserByEmailId(String emailId) throws UserEmailAlreadyExistsException;
 
-    User updateUser(User user) throws UserNotFoundException ;
+    User updateUser(User user) throws UserNotFoundException;
+
     void deleteUserById(int id);
+
+    Optional<User> getUser(String emailId) throws UserNotFoundException;
 
     void deleteUserByEmailId(String emailId) throws UserNotFoundException;
 }
